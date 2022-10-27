@@ -15,7 +15,7 @@ public class Model {
     }
 
     /** Number in a row to win the game */
-    private static final int NUMBER_TO_WIN = 4;
+    private static final int NUMBER_TO_WIN = 3;
 
     /** Connect four board */
     private States[][] board;
@@ -26,11 +26,17 @@ public class Model {
     /** Holds the last move made row */
     private int lastMoveColumn = 0;
 
+    /** Width of board */
+    private int width;
+
+    /** Height of board */
+    private int height;
+
     /**
      * Default constructor
      */
     public Model() {
-        this(3, 12);
+        this(8, 7);
     }
 
     /**
@@ -41,7 +47,28 @@ public class Model {
      */
     public Model(int width, int height) {
         // TODO: load file with settings data
+        this.width = width;
+        this.height = height;
+
         initBoard(width, height);
+    }
+
+    /**
+     * Returns height of board
+     * 
+     * @return height of board
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * Returns width of board
+     * 
+     * @return width of board
+     */
+    public int getWidth() {
+        return width;
     }
 
     /**
@@ -91,6 +118,25 @@ public class Model {
      */
     public States[][] getBoard() {
         return board;
+    }
+
+    /**
+     * Returns the amount of pieces in that column
+     * 
+     * @param column index of column
+     * @return the amount of pieces in that column
+     */
+    public int getCurrentHeight(int column) {
+        // Check for bounds
+        if (column < 0 || column > height - 1)
+            throw new IllegalArgumentException();
+
+        for (int i = board.length - 1; i >= 0; i--) {
+            if (board[i][column] == States.EMPTY) {
+                return board.length - 1 - i;
+            }
+        }
+        return board.length;
     }
 
     /**
@@ -165,6 +211,9 @@ public class Model {
         return count;
     }
 
+    /**
+     * Resets the game to start
+     */
     public void resetGame() {
         lastMoveRow = 0;
         lastMoveColumn = 0;
