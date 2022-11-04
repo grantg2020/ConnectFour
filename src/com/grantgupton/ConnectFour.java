@@ -58,6 +58,8 @@ public class ConnectFour {
             System.out.println("Nobody won!");
         else
             System.out.println(winner + " won!");
+
+        userInput.close();
     }
 
     public static void printBoard(Model game) {
